@@ -1,0 +1,54 @@
+#!/usr/bin/env perl
+
+# Encrypt selected text with gpg for the
+# hidden recipient with given $pubKey and
+# upload the encrypted content to sprunge.us
+
+# Usage: put the following lines in your .Xdefaults/.Xresources:
+# URxvt.perl-ext-common           : selection-to-clipboard,encrypt
+# URxvt.keysym.Control-Shift-G    : perl:encrypt:encrypt
+
+use strict;
+use warnings;
+
+sub on_user_command {
+  my ($self, $cmd) = @_;
+
+  if ($cmd eq "encrypt:encrypt") {
+    $self->try_to_encrypt();
+  }
+  return;
+}
+
+sub try_to_encrypt {
+  my ($self, $cmd) = @_;
+
+  # Edit the variable $pubKey
+  # according to your gpg pubkey
+  my $pubKey = "91370EEDAEBDD2BD";
+
+  my $selection = $self->selection($self->selection, 1);
+  my $concatArr = join("",
+    qx(echo -en \"$selection\" | gpg --encrypt --hidden-recipient $pubKey --armor));
+
+  my $pasted = qx(echo -en \"$concatArr\" | curl -F 'sprunge=<-' http://sprunge.us);
+  $self->selection($pasted, 1);
+  $self->selection_grab (urxvt::CurrentTime, 1);
+
+  $self->show_link();
+
+  return;
+}
+
+sub show_link {
+  my ($self, $link) = @_;
+  
+  my $overlayz = $self->overlay_simple(0, 0, "Link copied to clipboard.");
+  $self->{taimer} = urxvt::timer->new->after(5)->cb (
+    sub {
+      delete $self->{taimer};
+      undef $overlayz;
+    }
+  );
+  return;
+}
