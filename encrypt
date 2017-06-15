@@ -2,7 +2,7 @@
 
 # Encrypt selected text with gpg for the
 # hidden recipient with given $pubKey and
-# upload the encrypted content up to sprunge.us
+# upload the encrypted content to sprunge.us
 
 # Usage: put the following lines in your .Xdefaults/.Xresources:
 # URxvt.perl-ext-common           : selection-to-clipboard,encrypt
@@ -33,9 +33,18 @@ sub try_to_encrypt {
   my $concatArr = join("",
     qx(echo -en \"$selection\" | gpg --encrypt --hidden-recipient $pubKey --armor));
 
+  # Upload to hastebin
+  # my $web = "https://hastebin.com";
+  # my $pasted = qx(curl -sd \"$concatArr\" $web/documents);
+  # my @arr = split("\"", $pasted);
+  # $pasted = $arr[3];
+  # $self->selection($web . "/raw/" . $pasted, 1);
+  # $self->selection_grab(urxvt::CurrentTime, 1);
+
+  # Upload to sprunge
   my $pasted = qx(echo -en \"$concatArr\" | curl -F 'sprunge=<-' http://sprunge.us);
   $self->selection($pasted, 1);
-  $self->selection_grab (urxvt::CurrentTime, 1);
+  $self->selection_grab(urxvt::CurrentTime, 1);
 
   $self->show_msg("Link copied to clipboard.");
 
