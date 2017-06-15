@@ -41,6 +41,11 @@ sub try_to_encrypt {
   # $self->selection($web . "/raw/" . $pasted, 1);
   # $self->selection_grab(urxvt::CurrentTime, 1);
 
+  # Upload to dpaste
+  # my $pasted = qx(echo -en \"$concatArr\" | curl -s -F 'content=<-' http://dpaste.com/api/v2/);
+  # $self->selection($pasted . ".txt", 1);
+  # $self->selection_grab(urxvt::CurrentTime, 1);
+
   # Upload to sprunge
   my $pasted = qx(echo -en \"$concatArr\" | curl -F 'sprunge=<-' http://sprunge.us);
   $self->selection($pasted, 1);

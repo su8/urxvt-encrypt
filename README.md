@@ -1,6 +1,6 @@
 ![](img.png)
 
-Encrypt selected text within urxvt with **gpg** for the hidden recipient with given **$pubKey** (this is variable inside the script which have to be edited by hand) and upload the encrypted content to http://sprunge.us . Since the recipient is hidden, anyone willing to extract metadata about the recipient will be out of luck. Only the recipient with the correct **$pubKey** can decrypt and read the content.
+Encrypt selected text within urxvt with **gpg** for the hidden recipient with given **$pubKey** (this is variable inside the script which have to be edited by hand) and upload the encrypted content to http://sprunge.us , there are other 2 websites that can be used instead sprunge.us, just uncomment the code and you'll be ready to rock. Since the recipient is hidden, anyone willing to extract metadata about the recipient will be out of luck. Only the recipient with the correct **$pubKey** can decrypt and read the content.
 
 # Installation
 
