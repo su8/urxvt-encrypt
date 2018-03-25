@@ -51,6 +51,18 @@ sub try_to_encrypt {
   # $self->selection($pasted, 1);
   # $self->selection_grab(urxvt::CurrentTime, 1);
 
+  # Upload to clitxt.com
+  # my $pasted = qx(echo -en \"$concatArr\" | curl -F 'upfile=\@-' https://clitxt.com);
+  # $self->selection($pasted, 1);
+  # $self->selection_grab(urxvt::CurrentTime, 1);
+
+  # Upload to curlpaste.com
+  # my $pasted = qx(curl -s --data-binary \"$concatArr\" https://curlpaste.com);
+  # $pasted =~ s/(raw: |web: )//g;
+  # my @arr = split(/\n+/, $pasted);
+  # $self->selection($arr[0], 1);
+  # $self->selection_grab(urxvt::CurrentTime, 1);
+
   # Upload to ix.io
   my $pasted = qx(echo -en \"$concatArr\" | curl -F 'f:1=<-' ix.io);
   $self->selection($pasted, 1);
