@@ -47,7 +47,12 @@ sub try_to_encrypt {
   # $self->selection_grab(urxvt::CurrentTime, 1);
 
   # Upload to sprunge
-  my $pasted = qx(echo -en \"$concatArr\" | curl -F 'sprunge=<-' http://sprunge.us);
+  # my $pasted = qx(echo -en \"$concatArr\" | curl -F 'sprunge=<-' http://sprunge.us);
+  # $self->selection($pasted, 1);
+  # $self->selection_grab(urxvt::CurrentTime, 1);
+
+  # Upload to ix.io
+  my $pasted = qx(echo -en \"$concatArr\" | curl -F 'f:1=<-' ix.io);
   $self->selection($pasted, 1);
   $self->selection_grab(urxvt::CurrentTime, 1);
 
